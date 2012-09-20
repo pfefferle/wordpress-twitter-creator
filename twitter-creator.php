@@ -13,14 +13,15 @@ function twitter_creator_add_user_contactmethods($user_contactmethods) {
   $user_contactmethods['twitter'] = __("Twitter Username (without '@')");
   return $user_contactmethods;
 }
-add_filter("user_contactmethods", "twitter_cards_add_user_contactmethods", 1);
+add_filter("user_contactmethods", "twitter_creator_add_user_contactmethods", 1);
 
 // adds the "twitter:creator" meta-tag
 function twitter_creator_add_header() {
   if ( is_singular() ) {
     global $post;
-    if ($author = $post->post_author)
-      echo '<meta name="twitter:creator" content="@'.get_the_author_meta( 'twitter', $author ).'" />'."\n";
+    $author = $post->post_author;
+    if ($author && $twitter = get_the_author_meta( 'twitter', $author ))
+      echo '<meta name="twitter:creator" content="@'.$twitter.'" />'."\n";
   }
 }
 add_action("wp_head", "twitter_creator_add_header");
