@@ -23,5 +23,7 @@ function twitter_creator_add_header() {
     if ($author && $twitter = get_the_author_meta( 'twitter', $author ))
       echo '<meta name="twitter:creator" content="@'.$twitter.'" />'."\n";
   }
+  
+  echo '<meta name="twitter:card" content="summary" />'."\n";
 }
 add_action("wp_head", "twitter_creator_add_header");
